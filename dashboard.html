@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>کتابخانه من | PIKSO GAMES</title>
+<link rel="icon" href="pikso-logo-header.jpg" type="image/jpeg">
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #09090f;
+    color: white;
+    font-family: Tahoma, Arial, sans-serif;
+    padding-left: 190px;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 190px;
+    height: 100vh;
+    background: #11111b;
+    border-right: 1px solid #302344;
+    padding: 20px 14px;
+    z-index: 1000;
+}
+
+.sidebar-logo {
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 9px;
+    margin-bottom: 10px;
+    background: #1b1b2a;
+}
+
+.sidebar a:hover {
+    background: #7026b9;
+}
+
+header {
+    background: #11111b;
+    padding: 15px 25px;
+    border-bottom: 1px solid #302344;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-image {
+    width: 115px;
+    height: auto;
+}
+
+.logout {
+    background: #7e22ce;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.container {
+    width: 90%;
+    margin: 45px auto;
+}
+
+h1 {
+    color: #c084fc;
+    margin-bottom: 15px;
+}
+
+.welcome {
+    color: #aaa;
+    margin-bottom: 35px;
+}
+
+.games {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 320px));
+    gap: 25px;
+}
+
+.game-card {
+    background: #151521;
+    border: 1px solid #302344;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.game-card img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.game-info {
+    padding: 22px;
+}
+
+.game-info h2 {
+    margin-bottom: 18px;
+    font-size: 21px;
+}
+
+.free {
+    display: inline-block;
+    background: #153c29;
+    color: #65e6a0;
+    padding: 7px 15px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.download {
+    display: block;
+    text-align: center;
+    background: #9333ea;
+    color: white;
+    padding: 13px;
+    border-radius: 9px;
+    text-decoration: none;
+}
+
+.download:hover {
+    background: #7e22ce;
+}
+
+.message {
+    color: #fca5a5;
+    margin-top: 20px;
+}
+
+@media(max-width: 700px) {
+    body {
+        padding-left: 145px;
+    }
+
+    .sidebar {
+        width: 145px;
+        padding: 15px 10px;
+    }
+
+    .container {
+        width: 95%;
+    }
+
+    .logo-image {
+        width: 95px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+    <img
+        src="pikso-logo-header.jpg"
+        class="sidebar-logo"
+        alt="PIKSO GAMES"
+    >
+
+    <a href="index.html">🏠 خانه</a>
+    <a href="dashboard.html">🎮 کتابخانه من</a>
+    <a href="login.html">👤 حساب کاربری</a>
+</aside>
+
+<header>
+    <img
+        src="pikso-logo-header.jpg"
+        class="logo-image"
+        alt="PIKSO GAMES"
+    >
+
+    <button class="logout" onclick="logout()">خروج از حساب</button>
+</header>
+
+<main class="container">
+    <h1>کتابخانه بازی‌های من</h1>
+
+    <p class="welcome" id="welcome">
+        در حال بررسی حساب کاربری...
+    </p>
+
+    <div class="games">
+        <div class="game-card">
+            <img src="IMG_20261106_004502_679.jpg" alt="WOLF RACING">
+
+            <div class="game-info">
+                <h2>WOLF RACING</h2>
+
+                <div class="free">رایگان</div>
+
+                <a class="download"
+                   href="https://www.picofile.com/f/tN9NxENv5s/pixo-games.zip"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    دانلود دوباره بازی
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <p class="message" id="message"></p>
+</main>
+
+<script>
+async function checkLogin() {
+    try {
+        const response = await fetch("/api/me", {
+            credentials: "same-origin"
+        });
+
+        if (!response.ok) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const user = await response.json();
+
+        document.getElementById("welcome").textContent =
+            "خوش آمدی " + user.username + " عزیز!";
+
+    } catch (error) {
+        document.getElementById("welcome").textContent =
+            "ارتباط با سرور برقرار نشد.";
+    }
+}
+
+async function logout() {
+    try {
+        const response = await fetch("/api/logout", {
+            method: "POST",
+            credentials: "same-origin"
+        });
+
+        if (response.ok) {
+            window.location.href = "login.html";
+        } else {
+            document.getElementById("message").textContent =
+                "خروج از حساب انجام نشد.";
+        }
+    } catch (error) {
+        document.getElementById("message").textContent =
+            "ارتباط با سرور برقرار نشد.";
+    }
+}
+
+checkLogin();
+</script>
+
+</body>
+</html>
