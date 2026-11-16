@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>PIKSO GAMES</title>
 
     <style>
@@ -19,7 +19,6 @@
             color: white;
         }
 
-        /* نوار بالای سایت */
         header {
             background: #111124;
             padding: 22px 8%;
@@ -61,7 +60,6 @@
             font-weight: bold;
         }
 
-        /* بخش اصلی */
         .hero {
             text-align: center;
             padding: 100px 20px;
@@ -82,7 +80,6 @@
             line-height: 2;
         }
 
-        /* بازی ها */
         .games {
             padding: 60px 8%;
             text-align: center;
@@ -160,7 +157,30 @@
             background: #7e22ce;
         }
 
-        /* درباره ما */
+        /* کارت قابل کلیک بازی دوم */
+        .game-download {
+            display: block;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .free-label {
+            display: inline-block;
+            background: #14532d;
+            color: #86efac;
+            padding: 10px 20px;
+            border-radius: 9px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .download-hint {
+            color: #aaa;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
         .about {
             background: #111124;
             padding: 60px 20px;
@@ -220,11 +240,6 @@
             font-size: 18px;
         }
 
-        .close-button:hover {
-            background: #7e22ce;
-        }
-
-        /* پایین سایت */
         footer {
             padding: 25px;
             text-align: center;
@@ -310,8 +325,14 @@
 
             </div>
 
-            <!-- بازی دوم -->
-            <div class="game-card">
+            <!-- بازی دوم: WOLF RACING 1 -->
+            <a
+                class="game-card game-download"
+                href="https://www.picofile.com/f/tN9NxENv5s/pixo-games.zip"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="دانلود رایگان WOLF RACING 1"
+            >
 
                 <img
                     src="IMG_20261106_004502_679.jpg"
@@ -320,11 +341,15 @@
 
                 <h3>WOLF RACING 1</h3>
 
-                <div class="status">
-                    به‌زودی
+                <div class="free-label">
+                    رایگان | آماده نصب
                 </div>
 
-            </div>
+                <p class="download-hint">
+                    برای دانلود روی این قسمت کلیک کنید
+                </p>
+
+            </a>
 
         </div>
 
@@ -342,7 +367,7 @@
 
     </section>
 
-    <!-- پنجره ویدیوی آموزش -->
+    <!-- پنجره آموزش نصب -->
     <div class="video-modal" id="videoModal">
 
         <div class="video-box">
@@ -362,11 +387,9 @@
 
     </div>
 
-    <!-- فوتر -->
+    <!-- پایین سایت -->
     <footer>
-
         © تمامی حقوق برای PIKSO GAMES محفوظ است.
-
     </footer>
 
     <script>
@@ -384,7 +407,7 @@
             videoModal.classList.add("active");
 
             tutorialVideo.play().catch(function() {
-                // اگر پخش خودکار انجام نشد، کاربر می‌تواند Play را بزند.
+                // در صورت نیاز، کاربر دکمه پخش را می‌زند.
             });
 
         });
@@ -410,7 +433,7 @@
 
         });
 
-        // بستن با دکمه Escape
+        // بستن با Escape
         document.addEventListener("keydown", function(event) {
 
             if (event.key === "Escape") {
