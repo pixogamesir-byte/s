@@ -4,7 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>PIKSO GAMES</title>
+
+    <!-- آیکون لوگوی سایت در مرورگر -->
+    <link rel="icon" type="image/jpeg" href="pikso-logo-header(1).jpg">
 
     <style>
         * {
@@ -52,7 +56,7 @@
         }
 
         nav a:hover {
-            color: #a855f7;
+            color: #c084fc;
         }
 
         .tutorial-link {
@@ -132,16 +136,6 @@
             margin: 18px 0;
         }
 
-        .status {
-            display: inline-block;
-            background: #38234f;
-            color: #d8b4fe;
-            padding: 10px 20px;
-            border-radius: 9px;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
         .buy-button {
             display: block;
             background: #9333ea;
@@ -157,7 +151,6 @@
             background: #7e22ce;
         }
 
-        /* کارت قابل کلیک بازی دوم */
         .game-download {
             display: block;
             color: white;
@@ -271,16 +264,16 @@
         <div class="logo">PIKSO GAMES</div>
 
         <nav>
-            <a href="#home">خانه</a>
-            <a href="#games">بازی‌ها</a>
-            <a href="#about">درباره ما</a>
+            <a href="#home">🏠 خانه</a>
+            <a href="#games">🎮 بازی‌ها</a>
+            <a href="#about">ℹ️ درباره ما</a>
 
             <a href="#" class="tutorial-link" id="openTutorial">
-                آموزش نصب بازی
+                📥 آموزش نصب بازی
             </a>
 
-            <a href="login.html">ورود</a>
-            <a href="register.html">ثبت‌نام</a>
+            <a href="login.html">🔐 ورود</a>
+            <a href="register.html">📝 ثبت‌نام</a>
         </nav>
 
     </header>
@@ -291,7 +284,7 @@
         <h1>به <span>PIKSO GAMES</span> خوش آمدید</h1>
 
         <p>
-            دنیای بازی‌های جذاب را با ما تجربه کنید.
+            🎮 دنیای بازی‌های جذاب را با ما تجربه کنید.
         </p>
 
     </section>
@@ -299,7 +292,7 @@
     <!-- بازی ها -->
     <section class="games" id="games">
 
-        <h2>بازی‌های ما</h2>
+        <h2>🎮 بازی‌های ما</h2>
 
         <div class="game-list">
 
@@ -308,7 +301,7 @@
 
                 <img src="wolf.jpg" alt="THE END OF A WOLF">
 
-                <h3>THE END OF A WOLF</h3>
+                <h3>🐺 THE END OF A WOLF</h3>
 
                 <div class="price">
                     ۵۰٬۰۰۰ تومان
@@ -320,18 +313,17 @@
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    خرید و حمایت از بازی
+                    💜 خرید و حمایت از بازی
                 </a>
 
             </div>
 
-            <!-- بازی دوم: WOLF RACING 1 -->
+            <!-- بازی دوم -->
             <a
                 class="game-card game-download"
                 href="https://www.picofile.com/f/tN9NxENv5s/pixo-games.zip"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="دانلود رایگان WOLF RACING 1"
             >
 
                 <img
@@ -339,14 +331,14 @@
                     alt="WOLF RACING 1"
                 >
 
-                <h3>WOLF RACING 1</h3>
+                <h3>🏎️ WOLF RACING 1</h3>
 
                 <div class="free-label">
-                    رایگان | آماده نصب
+                    🟢 رایگان | آماده نصب
                 </div>
 
                 <p class="download-hint">
-                    برای دانلود روی این قسمت کلیک کنید
+                    📥 برای دانلود کلیک کنید
                 </p>
 
             </a>
@@ -358,7 +350,7 @@
     <!-- درباره ما -->
     <section class="about" id="about">
 
-        <h2>درباره PIKSO GAMES</h2>
+        <h2>💜 درباره PIKSO GAMES</h2>
 
         <p>
             ما در PIKSO GAMES تلاش می‌کنیم تجربه‌ای جذاب
@@ -376,7 +368,7 @@
                 ✕
             </button>
 
-            <h2>آموزش نصب بازی</h2>
+            <h2>📥 آموزش نصب بازی</h2>
 
             <video id="tutorialVideo" controls preload="metadata">
                 <source src="help.mp4" type="video/mp4">
@@ -387,9 +379,8 @@
 
     </div>
 
-    <!-- پایین سایت -->
     <footer>
-        © تمامی حقوق برای PIKSO GAMES محفوظ است.
+        💜 © تمامی حقوق برای PIKSO GAMES محفوظ است.
     </footer>
 
     <script>
@@ -399,20 +390,16 @@
         const videoModal = document.getElementById("videoModal");
         const tutorialVideo = document.getElementById("tutorialVideo");
 
-        // باز کردن آموزش
         openTutorial.addEventListener("click", function(event) {
 
             event.preventDefault();
 
             videoModal.classList.add("active");
 
-            tutorialVideo.play().catch(function() {
-                // در صورت نیاز، کاربر دکمه پخش را می‌زند.
-            });
+            tutorialVideo.play().catch(function() {});
 
         });
 
-        // بستن آموزش
         function closeVideo() {
 
             videoModal.classList.remove("active");
@@ -424,7 +411,6 @@
 
         closeTutorial.addEventListener("click", closeVideo);
 
-        // بستن با کلیک بیرون پنجره
         videoModal.addEventListener("click", function(event) {
 
             if (event.target === videoModal) {
@@ -433,7 +419,6 @@
 
         });
 
-        // بستن با Escape
         document.addEventListener("keydown", function(event) {
 
             if (event.key === "Escape") {
