@@ -4,10 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>PIKSO GAMES</title>
 
-    <!-- آیکون لوگوی سایت در مرورگر -->
     <link rel="icon" type="image/jpeg" href="pikso-logo-header(1).jpg">
 
     <style>
@@ -23,47 +21,120 @@
             color: white;
         }
 
+        /* هدر */
         header {
             background: #111124;
-            padding: 22px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            padding: 22px;
+            text-align: center;
             border-bottom: 1px solid #29294a;
         }
 
         .logo {
             color: #a855f7;
-            font-size: 26px;
+            font-size: 27px;
             font-weight: bold;
+            letter-spacing: 2px;
         }
 
-        nav {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        nav a {
+        /* دکمه باز کردن منو */
+        .menu-button {
+            position: fixed;
+            top: 15px;
+            left: 20px;
+            z-index: 1100;
+            background: #9333ea;
             color: white;
-            text-decoration: none;
-            font-size: 14px;
+            border: none;
+            border-radius: 10px;
+            width: 48px;
+            height: 45px;
+            font-size: 25px;
+            cursor: pointer;
             transition: 0.3s;
+        }
+
+        .menu-button:hover {
+            background: #7e22ce;
+        }
+
+        /* نوار کناری سمت چپ */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100%;
+            background: #111124;
+            border-right: 1px solid #9333ea;
+            z-index: 1200;
+            padding: 25px 18px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #33334d;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header h2 {
+            color: #c084fc;
+            font-size: 21px;
+        }
+
+        .close-menu {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 26px;
             cursor: pointer;
         }
 
-        nav a:hover {
-            color: #c084fc;
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            margin-bottom: 8px;
+            border-radius: 9px;
+            transition: 0.3s;
+            font-size: 15px;
         }
 
-        .tutorial-link {
+        .sidebar a:hover {
+            background: #292044;
             color: #c084fc;
-            font-weight: bold;
+            padding-right: 22px;
         }
 
+        .rubika-link {
+            color: #d8b4fe !important;
+            background: #24143b;
+        }
+
+        /* پس زمینه تاریک منو */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1150;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        /* صفحه اصلی */
         .hero {
             text-align: center;
             padding: 100px 20px;
@@ -84,6 +155,7 @@
             line-height: 2;
         }
 
+        /* بازی ها */
         .games {
             padding: 60px 8%;
             text-align: center;
@@ -174,6 +246,7 @@
             margin-top: 15px;
         }
 
+        /* درباره ما */
         .about {
             background: #111124;
             padding: 60px 20px;
@@ -186,7 +259,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            z-index: 1000;
+            z-index: 1500;
             background: rgba(0, 0, 0, 0.9);
             justify-content: center;
             align-items: center;
@@ -241,16 +314,12 @@
         }
 
         @media (max-width: 600px) {
-            header {
-                justify-content: center;
-            }
-
             .hero h1 {
                 font-size: 30px;
             }
 
-            nav {
-                justify-content: center;
+            .sidebar {
+                width: 270px;
             }
         }
     </style>
@@ -258,24 +327,48 @@
 
 <body>
 
-    <!-- نوار بالای سایت -->
+    <!-- دکمه منو -->
+    <button class="menu-button" id="menuButton" aria-label="باز کردن منو">
+        ☰
+    </button>
+
+    <!-- پس زمینه منو -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- نوار کناری -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+            <h2>PIKSO MENU</h2>
+            <button class="close-menu" id="closeMenu">✕</button>
+        </div>
+
+        <a href="#home" class="menu-link">🏠 خانه</a>
+
+        <a href="#games" class="menu-link">🎮 بازی‌ها</a>
+
+        <a href="#about" class="menu-link">ℹ️ درباره ما</a>
+
+        <a href="#" id="openTutorial">📥 آموزش نصب بازی</a>
+
+        <a href="login.html">🔐 ورود</a>
+
+        <a href="register.html">📝 ثبت‌نام</a>
+
+        <a
+            href="https://rubika.ir/piksogames"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="rubika-link"
+        >
+            💜 کانال روبیکا ما
+        </a>
+
+    </aside>
+
+    <!-- هدر -->
     <header>
-
         <div class="logo">PIKSO GAMES</div>
-
-        <nav>
-            <a href="#home">🏠 خانه</a>
-            <a href="#games">🎮 بازی‌ها</a>
-            <a href="#about">ℹ️ درباره ما</a>
-
-            <a href="#" class="tutorial-link" id="openTutorial">
-                📥 آموزش نصب بازی
-            </a>
-
-            <a href="login.html">🔐 ورود</a>
-            <a href="register.html">📝 ثبت‌نام</a>
-        </nav>
-
     </header>
 
     <!-- صفحه اصلی -->
@@ -359,7 +452,7 @@
 
     </section>
 
-    <!-- پنجره آموزش نصب -->
+    <!-- پنجره آموزش -->
     <div class="video-modal" id="videoModal">
 
         <div class="video-box">
@@ -379,52 +472,75 @@
 
     </div>
 
+    <!-- فوتر -->
     <footer>
         💜 © تمامی حقوق برای PIKSO GAMES محفوظ است.
     </footer>
 
     <script>
 
+        const menuButton = document.getElementById("menuButton");
+        const closeMenu = document.getElementById("closeMenu");
+        const sidebar = document.getElementById("sidebar");
+        const menuOverlay = document.getElementById("menuOverlay");
+
         const openTutorial = document.getElementById("openTutorial");
-        const closeTutorial = document.getElementById("closeTutorial");
         const videoModal = document.getElementById("videoModal");
+        const closeTutorial = document.getElementById("closeTutorial");
         const tutorialVideo = document.getElementById("tutorialVideo");
 
-        openTutorial.addEventListener("click", function(event) {
+        // باز کردن منو
+        function showMenu() {
+            sidebar.classList.add("active");
+            menuOverlay.classList.add("active");
+        }
 
+        // بستن منو
+        function hideMenu() {
+            sidebar.classList.remove("active");
+            menuOverlay.classList.remove("active");
+        }
+
+        menuButton.addEventListener("click", showMenu);
+        closeMenu.addEventListener("click", hideMenu);
+        menuOverlay.addEventListener("click", hideMenu);
+
+        // بستن منو بعد از انتخاب گزینه
+        document.querySelectorAll(".menu-link").forEach(function(link) {
+            link.addEventListener("click", hideMenu);
+        });
+
+        // باز کردن آموزش
+        openTutorial.addEventListener("click", function(event) {
             event.preventDefault();
 
+            hideMenu();
             videoModal.classList.add("active");
 
             tutorialVideo.play().catch(function() {});
-
         });
 
+        // بستن آموزش
         function closeVideo() {
-
             videoModal.classList.remove("active");
-
             tutorialVideo.pause();
             tutorialVideo.currentTime = 0;
-
         }
 
         closeTutorial.addEventListener("click", closeVideo);
 
         videoModal.addEventListener("click", function(event) {
-
             if (event.target === videoModal) {
                 closeVideo();
             }
-
         });
 
+        // کلید Escape
         document.addEventListener("keydown", function(event) {
-
             if (event.key === "Escape") {
+                hideMenu();
                 closeVideo();
             }
-
         });
 
     </script>
