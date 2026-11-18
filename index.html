@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>PIKSO GAMES</title>
-
-    <!-- لوگوی مرورگر -->
     <link rel="icon" type="image/jpeg" href="pikso-logo-header.jpg">
 
     <style>
@@ -18,16 +14,13 @@
             font-family: Tahoma, Arial, sans-serif;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             background: #090914;
             color: white;
         }
 
-        /* هدر */
         header {
             background: #111124;
             padding: 22px;
@@ -39,10 +32,8 @@
             color: #a855f7;
             font-size: 27px;
             font-weight: bold;
-            letter-spacing: 2px;
         }
 
-        /* دکمه منو */
         .menu-button {
             position: fixed;
             top: 15px;
@@ -56,14 +47,8 @@
             height: 45px;
             font-size: 25px;
             cursor: pointer;
-            transition: 0.3s;
         }
 
-        .menu-button:hover {
-            background: #7e22ce;
-        }
-
-        /* نوار کناری */
         .sidebar {
             position: fixed;
             top: 0;
@@ -75,13 +60,11 @@
             z-index: 1200;
             padding: 25px 18px;
             transform: translateX(-100%);
-            transition: transform 0.3s ease;
+            transition: 0.3s;
             overflow-y: auto;
         }
 
-        .sidebar.active {
-            transform: translateX(0);
-        }
+        .sidebar.active { transform: translateX(0); }
 
         .sidebar-header {
             display: flex;
@@ -92,10 +75,7 @@
             margin-bottom: 20px;
         }
 
-        .sidebar-header h2 {
-            color: #c084fc;
-            font-size: 21px;
-        }
+        .sidebar-header h2 { color: #c084fc; }
 
         .close-menu {
             background: transparent;
@@ -119,7 +99,6 @@
         .sidebar a:hover {
             background: #292044;
             color: #c084fc;
-            padding-right: 22px;
         }
 
         .rubika-link {
@@ -127,25 +106,16 @@
             background: #24143b;
         }
 
-        .soon-link {
-            color: #f0abfc !important;
-            background: #251536;
-        }
-
-        /* پس زمینه منو */
         .menu-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0,0,0,0.7);
             z-index: 1150;
         }
 
-        .menu-overlay.active {
-            display: block;
-        }
+        .menu-overlay.active { display: block; }
 
-        /* صفحه اصلی */
         .hero {
             text-align: center;
             padding: 100px 20px;
@@ -157,16 +127,13 @@
             margin-bottom: 20px;
         }
 
-        .hero h1 span {
-            color: #a855f7;
-        }
+        .hero h1 span { color: #a855f7; }
 
         .hero p {
             color: #b9b9c9;
             line-height: 2;
         }
 
-        /* بازی ها */
         .games {
             padding: 60px 8%;
             text-align: center;
@@ -180,7 +147,6 @@
         .game-list {
             display: flex;
             justify-content: center;
-            align-items: stretch;
             flex-wrap: wrap;
             gap: 25px;
         }
@@ -207,10 +173,7 @@
             border-radius: 12px;
         }
 
-        .game-card h3 {
-            margin: 20px 0;
-            font-size: 21px;
-        }
+        .game-card h3 { margin: 20px 0; }
 
         .price {
             color: #a855f7;
@@ -227,19 +190,6 @@
             padding: 14px;
             border-radius: 10px;
             font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .buy-button:hover {
-            background: #7e22ce;
-        }
-
-        /* دانلود بازی رایگان */
-        .game-download {
-            display: block;
-            color: white;
-            text-decoration: none;
-            cursor: pointer;
         }
 
         .free-label {
@@ -252,13 +202,19 @@
             font-weight: bold;
         }
 
+        .game-download {
+            display: block;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
         .download-hint {
             color: #aaa;
             font-size: 13px;
             margin-top: 15px;
         }
 
-        /* درباره ما */
         .about {
             background: #111124;
             padding: 60px 20px;
@@ -266,21 +222,18 @@
             line-height: 2.2;
         }
 
-        /* پنجره آموزش */
         .video-modal {
             display: none;
             position: fixed;
             inset: 0;
             z-index: 1500;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0,0,0,0.9);
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
 
-        .video-modal.active {
-            display: flex;
-        }
+        .video-modal.active { display: flex; }
 
         .video-box {
             background: #17172b;
@@ -301,8 +254,8 @@
         .video-box video {
             width: 100%;
             max-height: 65vh;
-            border-radius: 12px;
             background: black;
+            border-radius: 12px;
         }
 
         .close-button {
@@ -315,10 +268,8 @@
             border-radius: 8px;
             padding: 8px 14px;
             cursor: pointer;
-            font-size: 18px;
         }
 
-        /* فوتر */
         footer {
             padding: 25px;
             text-align: center;
@@ -327,28 +278,17 @@
         }
 
         @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 30px;
-            }
-
-            .sidebar {
-                width: 270px;
-            }
+            .hero h1 { font-size: 30px; }
+            .sidebar { width: 270px; }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- دکمه باز کردن منو -->
-    <button class="menu-button" id="menuButton">
-        ☰
-    </button>
-
-    <!-- پس زمینه منو -->
+    <button class="menu-button" id="menuButton">☰</button>
     <div class="menu-overlay" id="menuOverlay"></div>
 
-    <!-- نوار کناری -->
     <aside class="sidebar" id="sidebar">
 
         <div class="sidebar-header">
@@ -357,101 +297,59 @@
         </div>
 
         <a href="#home" class="menu-link">🏠 خانه</a>
-
         <a href="#games" class="menu-link">🎮 بازی‌ها</a>
-
         <a href="#about" class="menu-link">ℹ️ درباره ما</a>
-
         <a href="#" id="openTutorial">📥 آموزش نصب بازی</a>
-
         <a href="login.html">🔐 ورود</a>
-
         <a href="register.html">📝 ثبت‌نام</a>
 
-        <a
-            href="https://rubika.ir/piksogames"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="rubika-link"
-        >
+        <a href="https://rubika.ir/piksogames"
+           target="_blank" class="rubika-link">
             💜 کانال روبیکا ما
         </a>
 
-        <a
-            href="https://rubika.ir/piksogames"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="rubika-link"
-        >
+        <a href="https://rubika.ir/piksogames"
+           target="_blank" class="rubika-link">
             📢 تبلیغات
         </a>
 
-        <a href="soon.html" class="soon-link">
-            🚧 صفحه دوم
-        </a>
+        <a href="trailers.html">🎞️ تریلرها</a>
 
     </aside>
 
-    <!-- هدر سایت -->
     <header>
         <div class="logo">PIKSO GAMES</div>
     </header>
 
-    <!-- صفحه اصلی -->
     <section class="hero" id="home">
-
         <h1>به <span>PIKSO GAMES</span> خوش آمدید</h1>
-
-        <p>
-            🎮 دنیای بازی‌های جذاب را با ما تجربه کنید.
-        </p>
-
+        <p>🎮 دنیای بازی‌های جذاب را با ما تجربه کنید.</p>
     </section>
 
-    <!-- بازی ها -->
     <section class="games" id="games">
-
         <h2>🎮 بازی‌های ما</h2>
 
         <div class="game-list">
 
-            <!-- بازی اول -->
             <div class="game-card">
-
-                <img
-                    src="wolf.jpg"
-                    alt="THE END OF A WOLF"
-                >
-
+                <img src="wolf.jpg" alt="THE END OF A WOLF">
                 <h3>🐺 THE END OF A WOLF</h3>
 
-                <div class="price">
-                    ۵۰٬۰۰۰ تومان
-                </div>
+                <div class="price">۵۰٬۰۰۰ تومان</div>
 
-                <a
-                    class="buy-button"
-                    href="https://daramet.com/adms_mozi/products"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                <a class="buy-button"
+                   href="https://daramet.com/adms_mozi/products"
+                   target="_blank">
                     💜 خرید و حمایت از بازی
                 </a>
-
             </div>
 
-            <!-- بازی دوم -->
-            <a
-                class="game-card game-download"
-                href="https://www.picofile.com/f/tN9NxENv5s/pixo-games.zip"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
+            <a class="game-card game-download"
+               href="https://www.picofile.com/f/tN9NxENv5s/pixo-games.zip"
+               target="_blank">
 
-                <img
-                    src="IMG_20261106_004502_679.jpg"
-                    alt="WOLF RACING 1"
-                >
+                <img src="IMG_20261106_004502_679.jpg"
+                     alt="WOLF RACING 1">
 
                 <h3>🏎️ WOLF RACING 1</h3>
 
@@ -459,55 +357,36 @@
                     🟢 رایگان | آماده نصب
                 </div>
 
-                <p class="download-hint">
-                    📥 برای دانلود کلیک کنید
-                </p>
-
+                <p class="download-hint">📥 برای دانلود کلیک کنید</p>
             </a>
 
         </div>
-
     </section>
 
-    <!-- درباره ما -->
     <section class="about" id="about">
-
         <h2>💜 درباره PIKSO GAMES</h2>
-
         <p>
             ما در PIKSO GAMES تلاش می‌کنیم تجربه‌ای جذاب
             از دنیای بازی‌ها برای شما بسازیم.
         </p>
-
     </section>
 
-    <!-- پنجره آموزش نصب -->
     <div class="video-modal" id="videoModal">
-
         <div class="video-box">
-
-            <button class="close-button" id="closeTutorial">
-                ✕
-            </button>
-
+            <button class="close-button" id="closeTutorial">✕</button>
             <h2>📥 آموزش نصب بازی</h2>
 
             <video id="tutorialVideo" controls preload="metadata">
                 <source src="help.mp4" type="video/mp4">
-                مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
             </video>
-
         </div>
-
     </div>
 
-    <!-- فوتر -->
     <footer>
         💜 © تمامی حقوق برای PIKSO GAMES محفوظ است.
     </footer>
 
     <script>
-
         const menuButton = document.getElementById("menuButton");
         const closeMenu = document.getElementById("closeMenu");
         const sidebar = document.getElementById("sidebar");
@@ -518,73 +397,44 @@
         const closeTutorial = document.getElementById("closeTutorial");
         const tutorialVideo = document.getElementById("tutorialVideo");
 
-        // باز کردن منو
         function showMenu() {
             sidebar.classList.add("active");
             menuOverlay.classList.add("active");
         }
 
-        // بستن منو
         function hideMenu() {
             sidebar.classList.remove("active");
             menuOverlay.classList.remove("active");
         }
 
         menuButton.addEventListener("click", showMenu);
-
         closeMenu.addEventListener("click", hideMenu);
-
         menuOverlay.addEventListener("click", hideMenu);
 
-        // بستن منو پس از انتخاب گزینه‌های داخلی
-        document.querySelectorAll(".menu-link").forEach(function(link) {
-            link.addEventListener("click", hideMenu);
-        });
-
-        // باز کردن آموزش نصب
         openTutorial.addEventListener("click", function(event) {
-
             event.preventDefault();
-
             hideMenu();
-
             videoModal.classList.add("active");
-
-            tutorialVideo.play().catch(function() {});
-
         });
 
-        // بستن ویدیو
         function closeVideo() {
-
             videoModal.classList.remove("active");
-
             tutorialVideo.pause();
-
             tutorialVideo.currentTime = 0;
-
         }
 
         closeTutorial.addEventListener("click", closeVideo);
 
         videoModal.addEventListener("click", function(event) {
-
-            if (event.target === videoModal) {
-                closeVideo();
-            }
-
+            if (event.target === videoModal) closeVideo();
         });
 
-        // بستن با Escape
         document.addEventListener("keydown", function(event) {
-
             if (event.key === "Escape") {
                 hideMenu();
                 closeVideo();
             }
-
         });
-
     </script>
 
 </body>
