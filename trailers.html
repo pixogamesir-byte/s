@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PIKSO GAMES | تریلرها</title>
+    <link rel="icon" type="image/jpeg" href="pikso-logo-header.jpg">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Tahoma, Arial, sans-serif;
+        }
+
+        body {
+            background: #090914;
+            color: white;
+            text-align: center;
+        }
+
+        header {
+            background: #111124;
+            padding: 25px;
+            border-bottom: 1px solid #9333ea;
+        }
+
+        header h1 {
+            color: #a855f7;
+        }
+
+        .container {
+            padding: 60px 20px;
+        }
+
+        .container h2 {
+            margin-bottom: 35px;
+        }
+
+        .trailer-card {
+            display: block;
+            width: 100%;
+            max-width: 550px;
+            margin: auto;
+            padding: 18px;
+            background: #17172b;
+            border: 1px solid #343454;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .trailer-card:hover {
+            transform: translateY(-5px);
+            border-color: #a855f7;
+        }
+
+        .trailer-card img {
+            width: 100%;
+            height: 270px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .trailer-card h3 {
+            margin: 20px 0;
+            color: white;
+        }
+
+        .play-text {
+            color: #c084fc;
+            margin-bottom: 10px;
+        }
+
+        .player {
+            display: none;
+            max-width: 850px;
+            margin: 35px auto;
+        }
+
+        .player.active {
+            display: block;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 15px;
+            background: black;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 14px 25px;
+            background: #9333ea;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 25px;
+            color: #888;
+            background: #080810;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🎞️ تریلرهای PIKSO GAMES</h1>
+    </header>
+
+    <main class="container">
+
+        <h2>🎬 تریلر بازی‌های ما</h2>
+
+        <div class="trailer-card" id="trailerCard">
+
+            <img src="IMG_20261106_004502_679.jpg"
+                 alt="WOLF RACING 1">
+
+            <h3>🏎️ WOLF RACING 1</h3>
+
+            <p class="play-text">▶️ برای تماشای تریلر کلیک کن</p>
+
+        </div>
+
+        <div class="player" id="player">
+
+            <video id="trailerVideo" controls preload="metadata">
+                <source src="kos.mp4" type="video/mp4">
+                مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+            </video>
+
+        </div>
+
+        <a href="index.html" class="back-button">
+            🏠 بازگشت به صفحه اصلی
+        </a>
+
+    </main>
+
+    <footer>
+        💜 © تمامی حقوق برای PIKSO GAMES محفوظ است.
+    </footer>
+
+    <script>
+        const trailerCard = document.getElementById("trailerCard");
+        const player = document.getElementById("player");
+        const trailerVideo = document.getElementById("trailerVideo");
+
+        trailerCard.addEventListener("click", function() {
+            player.classList.add("active");
+            trailerCard.style.display = "none";
+
+            trailerVideo.play().catch(function() {});
+            player.scrollIntoView({ behavior: "smooth" });
+        });
+    </script>
+
+</body>
+</html>
