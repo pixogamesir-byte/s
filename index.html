@@ -14,7 +14,9 @@
             font-family: Tahoma, Arial, sans-serif;
         }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
             background: #090914;
@@ -49,6 +51,34 @@
             cursor: pointer;
         }
 
+        /* دکمه پنل کاربری */
+        .user-panel-link {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            z-index: 1100;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #9333ea;
+            color: white;
+            text-decoration: none;
+            padding: 13px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .user-panel-link:hover {
+            background: #7e22ce;
+            transform: translateY(-2px);
+        }
+
+        .user-panel-link[hidden] {
+            display: none;
+        }
+
         .sidebar {
             position: fixed;
             top: 0;
@@ -64,7 +94,9 @@
             overflow-y: auto;
         }
 
-        .sidebar.active { transform: translateX(0); }
+        .sidebar.active {
+            transform: translateX(0);
+        }
 
         .sidebar-header {
             display: flex;
@@ -75,7 +107,9 @@
             margin-bottom: 20px;
         }
 
-        .sidebar-header h2 { color: #c084fc; }
+        .sidebar-header h2 {
+            color: #c084fc;
+        }
 
         .close-menu {
             background: transparent;
@@ -114,7 +148,9 @@
             z-index: 1150;
         }
 
-        .menu-overlay.active { display: block; }
+        .menu-overlay.active {
+            display: block;
+        }
 
         .hero {
             text-align: center;
@@ -127,7 +163,9 @@
             margin-bottom: 20px;
         }
 
-        .hero h1 span { color: #a855f7; }
+        .hero h1 span {
+            color: #a855f7;
+        }
 
         .hero p {
             color: #b9b9c9;
@@ -173,7 +211,9 @@
             border-radius: 12px;
         }
 
-        .game-card h3 { margin: 20px 0; }
+        .game-card h3 {
+            margin: 20px 0;
+        }
 
         .price {
             color: #a855f7;
@@ -233,7 +273,9 @@
             padding: 20px;
         }
 
-        .video-modal.active { display: flex; }
+        .video-modal.active {
+            display: flex;
+        }
 
         .video-box {
             background: #17172b;
@@ -278,8 +320,19 @@
         }
 
         @media (max-width: 600px) {
-            .hero h1 { font-size: 30px; }
-            .sidebar { width: 270px; }
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .sidebar {
+                width: 270px;
+            }
+
+            .user-panel-link {
+                right: 12px;
+                padding: 12px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -287,6 +340,15 @@
 <body>
 
     <button class="menu-button" id="menuButton">☰</button>
+
+    <!-- دکمه پنل کاربری -->
+    <a href="dashboard.html"
+       id="userPanelLink"
+       class="user-panel-link"
+       hidden>
+        👤 پنل کاربری
+    </a>
+
     <div class="menu-overlay" id="menuOverlay"></div>
 
     <aside class="sidebar" id="sidebar">
@@ -304,12 +366,14 @@
         <a href="register.html">📝 ثبت‌نام</a>
 
         <a href="https://rubika.ir/piksogames"
-           target="_blank" class="rubika-link">
+           target="_blank"
+           class="rubika-link">
             💜 کانال روبیکا ما
         </a>
 
         <a href="https://rubika.ir/piksogames"
-           target="_blank" class="rubika-link">
+           target="_blank"
+           class="rubika-link">
             📢 تبلیغات
         </a>
 
@@ -383,59 +447,4 @@
     </div>
 
     <footer>
-        💜 © تمامی حقوق برای PIKSO GAMES محفوظ است.
-    </footer>
-
-    <script>
-        const menuButton = document.getElementById("menuButton");
-        const closeMenu = document.getElementById("closeMenu");
-        const sidebar = document.getElementById("sidebar");
-        const menuOverlay = document.getElementById("menuOverlay");
-
-        const openTutorial = document.getElementById("openTutorial");
-        const videoModal = document.getElementById("videoModal");
-        const closeTutorial = document.getElementById("closeTutorial");
-        const tutorialVideo = document.getElementById("tutorialVideo");
-
-        function showMenu() {
-            sidebar.classList.add("active");
-            menuOverlay.classList.add("active");
-        }
-
-        function hideMenu() {
-            sidebar.classList.remove("active");
-            menuOverlay.classList.remove("active");
-        }
-
-        menuButton.addEventListener("click", showMenu);
-        closeMenu.addEventListener("click", hideMenu);
-        menuOverlay.addEventListener("click", hideMenu);
-
-        openTutorial.addEventListener("click", function(event) {
-            event.preventDefault();
-            hideMenu();
-            videoModal.classList.add("active");
-        });
-
-        function closeVideo() {
-            videoModal.classList.remove("active");
-            tutorialVideo.pause();
-            tutorialVideo.currentTime = 0;
-        }
-
-        closeTutorial.addEventListener("click", closeVideo);
-
-        videoModal.addEventListener("click", function(event) {
-            if (event.target === videoModal) closeVideo();
-        });
-
-        document.addEventListener("keydown", function(event) {
-            if (event.key === "Escape") {
-                hideMenu();
-                closeVideo();
-            }
-        });
-    </script>
-
-</body>
-</html>
+        💜 © تمامی حقوق برای PIKSO
