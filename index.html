@@ -26,6 +26,7 @@
             padding: 22px;
             text-align: center;
             border-bottom: 1px solid #29294a;
+            position: relative;
         }
 
         .logo {
@@ -34,11 +35,37 @@
             font-weight: bold;
         }
 
+        /* دکمه پنل کاربری */
+        .user-panel-link {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-block;
+            background: #9333ea;
+            color: white;
+            text-decoration: none;
+            padding: 11px 17px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .user-panel-link:hover {
+            background: #a855f7;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .user-panel-link[hidden] {
+            display: none;
+        }
+
         .menu-button {
             position: fixed;
             top: 15px;
             left: 20px;
-            z-index: 1100;
+            z-index: 1300;
             background: #9333ea;
             color: white;
             border: none;
@@ -60,11 +87,15 @@
             z-index: 1200;
             padding: 25px 18px;
             transform: translateX(-100%);
-            transition: 0.3s;
+            transition: transform 0.3s ease;
+            visibility: hidden;
             overflow-y: auto;
         }
 
-        .sidebar.active { transform: translateX(0); }
+        .sidebar.active {
+            transform: translateX(0);
+            visibility: visible;
+        }
 
         .sidebar-header {
             display: flex;
@@ -280,6 +311,16 @@
         @media (max-width: 600px) {
             .hero h1 { font-size: 30px; }
             .sidebar { width: 270px; }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .user-panel-link {
+                right: 75px;
+                padding: 10px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -318,6 +359,13 @@
     </aside>
 
     <header>
+        <a href="dashboard.html"
+           class="user-panel-link"
+           id="userPanelLink"
+           hidden>
+            👤 پنل کاربری
+        </a>
+
         <div class="logo">PIKSO GAMES</div>
     </header>
 
@@ -387,53 +435,98 @@
     </footer>
 
     <script>
-        const menuButton = document.getElementById("menuButton");
-        const closeMenu = document.getElementById("closeMenu");
-        const sidebar = document.getElementById("sidebar");
-        const menuOverlay = document.getElementById("menuOverlay");
+        document.addEventListener("DOMContentLoaded", function() {
 
-        const openTutorial = document.getElementById("openTutorial");
-        const videoModal = document.getElementById("videoModal");
-        const closeTutorial = document.getElementById("closeTutorial");
-        const tutorialVideo = document.getElementById("tutorialVideo");
+            const menuButton = document.getElementById("menuButton");
+            const closeMenu = document.getElementById("closeMenu");
+            const sidebar = document.getElementById("sidebar");
+            const menuOverlay = document.getElementById("menuOverlay");
 
-        function showMenu() {
-            sidebar.classList.add("active");
-            menuOverlay.classList.add("active");
-        }
+            const openTutorial = document.getElementById("openTutorial");
+            const videoModal = document.getElementById("videoModal");
+            const closeTutorial = document.getElementById("closeTutorial");
+            const tutorialVideo = document.getElementById("tutorialVideo");
 
-        function hideMenu() {
-            sidebar.classList.remove("active");
-            menuOverlay.classList.remove("active");
-        }
+            const userPanelLink = document.getElementById("userPanelLink");
 
-        menuButton.addEventListener("click", showMenu);
-        closeMenu.addEventListener("click", hideMenu);
-        menuOverlay.addEventListener("click", hideMenu);
-
-        openTutorial.addEventListener("click", function(event) {
-            event.preventDefault();
-            hideMenu();
-            videoModal.classList.add("active");
-        });
-
-        function closeVideo() {
-            videoModal.classList.remove("active");
-            tutorialVideo.pause();
-            tutorialVideo.currentTime = 0;
-        }
-
-        closeTutorial.addEventListener("click", closeVideo);
-
-        videoModal.addEventListener("click", function(event) {
-            if (event.target === videoModal) closeVideo();
-        });
-
-        document.addEventListener("keydown", function(event) {
-            if (event.key === "Escape") {
-                hideMenu();
-                closeVideo();
+            function showMenu() {
+                sidebar.classList.add("active");
+                menuOverlay.classList.add("active");
             }
+
+            function hideMenu() {
+                sidebar.classList.remove("active");
+                menuOverlay.classList.remove("active");
+            }
+
+            menuButton.addEventListener("click", showMenu);
+            closeMenu.addEventListener("click", hideMenu);
+            menuOverlay.addEventListener("click", hideMenu);
+
+            document.querySelectorAll(".menu-link").forEach(function(link) {
+                link.addEventListener("click", hideMenu);
+            });
+
+            openTutorial.addEventListener("click", function(event) {
+                event.preventDefault();
+                hideMenu();
+                videoModal.classList.add("active");
+            });
+
+            function closeVideo() {
+                videoModal.classList.remove("active");
+                tutorialVideo.pause();
+                tutorialVideo.currentTime = 0;
+            }
+
+            closeTutorial.addEventListener("click", closeVideo);
+
+            videoModal.addEventListener("click", function(event) {
+                if (event.target === videoModal) {
+                    closeVideo();
+                }
+            });
+
+            document.addEventListener("keydown", function(event) {
+                if (event.key === "Escape") {
+                    hideMenu();
+                    closeVideo();
+                }
+            });
+
+            // بررسی ورود کاربر و نمایش دکمه پنل کاربری
+            async function checkUserSession() {
+                try {
+                    const response = await fetch("/api/me", {
+                        method: "GET",
+                        credentials: "include",
+                        cache: "no-store"
+                    });
+
+                    if (!response.ok) {
+                        userPanelLink.hidden = true;
+                        return;
+                    }
+
+                    const data = await response.json();
+
+                    const isLoggedIn =
+                        data.loggedIn === true ||
+                        data.isLoggedIn === true ||
+                        data.authenticated === true ||
+                        Boolean(data.username) ||
+                        Boolean(data.user);
+
+                    userPanelLink.hidden = !isLoggedIn;
+
+                } catch (error) {
+                    console.error("خطا در بررسی وضعیت ورود:", error);
+                    userPanelLink.hidden = true;
+                }
+            }
+
+            checkUserSession();
+
         });
     </script>
 
