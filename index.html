@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>PIKSO GAMES</title>
+
     <link rel="icon" type="image/jpeg" href="pikso-logo-header.jpg">
 
     <style>
@@ -14,12 +17,16 @@
             font-family: Tahoma, Arial, sans-serif;
         }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
             background: #090914;
             color: white;
         }
+
+        /* هدر */
 
         header {
             background: #111124;
@@ -27,6 +34,7 @@
             text-align: center;
             border-bottom: 1px solid #29294a;
             position: relative;
+            min-height: 75px;
         }
 
         .logo {
@@ -36,6 +44,7 @@
         }
 
         /* دکمه پنل کاربری */
+
         .user-panel-link {
             position: absolute;
             right: 20px;
@@ -54,12 +63,13 @@
 
         .user-panel-link:hover {
             background: #a855f7;
-            transform: translateY(-50%) scale(1.05);
         }
 
         .user-panel-link[hidden] {
-            display: none;
+            display: none !important;
         }
+
+        /* دکمه منو */
 
         .menu-button {
             position: fixed;
@@ -75,6 +85,8 @@
             font-size: 25px;
             cursor: pointer;
         }
+
+        /* منوی کناری */
 
         .sidebar {
             position: fixed;
@@ -106,7 +118,9 @@
             margin-bottom: 20px;
         }
 
-        .sidebar-header h2 { color: #c084fc; }
+        .sidebar-header h2 {
+            color: #c084fc;
+        }
 
         .close-menu {
             background: transparent;
@@ -137,6 +151,12 @@
             background: #24143b;
         }
 
+        .sidebar-panel {
+            background: #7026b9;
+        }
+
+        /* پس زمینه منو */
+
         .menu-overlay {
             display: none;
             position: fixed;
@@ -145,7 +165,11 @@
             z-index: 1150;
         }
 
-        .menu-overlay.active { display: block; }
+        .menu-overlay.active {
+            display: block;
+        }
+
+        /* صفحه اصلی */
 
         .hero {
             text-align: center;
@@ -158,12 +182,16 @@
             margin-bottom: 20px;
         }
 
-        .hero h1 span { color: #a855f7; }
+        .hero h1 span {
+            color: #a855f7;
+        }
 
         .hero p {
             color: #b9b9c9;
             line-height: 2;
         }
+
+        /* بازی ها */
 
         .games {
             padding: 60px 8%;
@@ -204,7 +232,9 @@
             border-radius: 12px;
         }
 
-        .game-card h3 { margin: 20px 0; }
+        .game-card h3 {
+            margin: 20px 0;
+        }
 
         .price {
             color: #a855f7;
@@ -246,12 +276,16 @@
             margin-top: 15px;
         }
 
+        /* درباره ما */
+
         .about {
             background: #111124;
             padding: 60px 20px;
             text-align: center;
             line-height: 2.2;
         }
+
+        /* پنجره آموزش */
 
         .video-modal {
             display: none;
@@ -264,7 +298,9 @@
             padding: 20px;
         }
 
-        .video-modal.active { display: flex; }
+        .video-modal.active {
+            display: flex;
+        }
 
         .video-box {
             background: #17172b;
@@ -301,6 +337,8 @@
             cursor: pointer;
         }
 
+        /* فوتر */
+
         footer {
             padding: 25px;
             text-align: center;
@@ -308,9 +346,17 @@
             background: #080810;
         }
 
+        /* موبایل */
+
         @media (max-width: 600px) {
-            .hero h1 { font-size: 30px; }
-            .sidebar { width: 270px; }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .sidebar {
+                width: 270px;
+            }
 
             .logo {
                 font-size: 21px;
@@ -322,43 +368,84 @@
                 font-size: 12px;
             }
         }
+
     </style>
 </head>
 
 <body>
 
-    <button class="menu-button" id="menuButton">☰</button>
+    <!-- دکمه منو -->
+
+    <button class="menu-button" id="menuButton">
+        ☰
+    </button>
+
     <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- منوی کناری -->
 
     <aside class="sidebar" id="sidebar">
 
         <div class="sidebar-header">
+
             <h2>PIKSO MENU</h2>
-            <button class="close-menu" id="closeMenu">✕</button>
+
+            <button class="close-menu" id="closeMenu">
+                ✕
+            </button>
+
         </div>
 
-        <a href="#home" class="menu-link">🏠 خانه</a>
-        <a href="#games" class="menu-link">🎮 بازی‌ها</a>
-        <a href="#about" class="menu-link">ℹ️ درباره ما</a>
-        <a href="#" id="openTutorial">📥 آموزش نصب بازی</a>
-        <a href="login.html">🔐 ورود</a>
-        <a href="register.html">📝 ثبت‌نام</a>
+        <a href="#home" class="menu-link">
+            🏠 خانه
+        </a>
+
+        <a href="#games" class="menu-link">
+            🎮 بازی‌ها
+        </a>
+
+        <a href="#about" class="menu-link">
+            ℹ️ درباره ما
+        </a>
+
+        <a href="dashboard.html" id="sidebarPanelLink" class="sidebar-panel" hidden>
+            👤 پنل کاربری
+        </a>
+
+        <a href="#" id="openTutorial">
+            📥 آموزش نصب بازی
+        </a>
+
+        <a href="login.html" id="loginLink">
+            🔐 ورود
+        </a>
+
+        <a href="register.html" id="registerLink">
+            📝 ثبت‌نام
+        </a>
 
         <a href="https://rubika.ir/piksogames"
-           target="_blank" class="rubika-link">
+           target="_blank"
+           class="rubika-link">
             💜 کانال روبیکا ما
         </a>
 
         <a href="https://rubika.ir/piksogames"
-           target="_blank" class="rubika-link">
+           target="_blank"
+           class="rubika-link">
             📢 تبلیغات
         </a>
 
-        <a href="trailers.html">🎞️ تریلرها</a>
+        <a href="trailers.html">
+            🎞️ تریلرها
+        </a>
 
     </aside>
 
+    <!-- هدر -->
+
     <header>
+
         <a href="dashboard.html"
            class="user-panel-link"
            id="userPanelLink"
@@ -366,35 +453,57 @@
             👤 پنل کاربری
         </a>
 
-        <div class="logo">PIKSO GAMES</div>
+        <div class="logo">
+            PIKSO GAMES
+        </div>
+
     </header>
 
+    <!-- صفحه اصلی -->
+
     <section class="hero" id="home">
-        <h1>به <span>PIKSO GAMES</span> خوش آمدید</h1>
-        <p>🎮 دنیای بازی‌های جذاب را با ما تجربه کنید.</p>
+
+        <h1>
+            به <span>PIKSO GAMES</span> خوش آمدید
+        </h1>
+
+        <p>
+            🎮 دنیای بازی‌های جذاب را با ما تجربه کنید.
+        </p>
+
     </section>
 
+    <!-- بازی ها -->
+
     <section class="games" id="games">
+
         <h2>🎮 بازی‌های ما</h2>
 
         <div class="game-list">
 
             <div class="game-card">
+
                 <img src="wolf.jpg" alt="THE END OF A WOLF">
+
                 <h3>🐺 THE END OF A WOLF</h3>
 
-                <div class="price">۵۰٬۰۰۰ تومان</div>
+                <div class="price">
+                    ۵۰٬۰۰۰ تومان
+                </div>
 
                 <a class="buy-button"
                    href="https://daramet.com/adms_mozi/products"
-                   target="_blank">
+                   target="_blank"
+                   rel="noopener noreferrer">
                     💜 خرید و حمایت از بازی
                 </a>
+
             </div>
 
             <a class="game-card game-download"
                href="https://www.picofile.com/f/tN9NxENv5s/pixo-games.zip"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <img src="IMG_20261106_004502_679.jpg"
                      alt="WOLF RACING 1">
@@ -405,36 +514,57 @@
                     🟢 رایگان | آماده نصب
                 </div>
 
-                <p class="download-hint">📥 برای دانلود کلیک کنید</p>
+                <p class="download-hint">
+                    📥 برای دانلود کلیک کنید
+                </p>
+
             </a>
 
         </div>
+
     </section>
 
+    <!-- درباره ما -->
+
     <section class="about" id="about">
+
         <h2>💜 درباره PIKSO GAMES</h2>
+
         <p>
             ما در PIKSO GAMES تلاش می‌کنیم تجربه‌ای جذاب
             از دنیای بازی‌ها برای شما بسازیم.
         </p>
+
     </section>
 
+    <!-- آموزش نصب -->
+
     <div class="video-modal" id="videoModal">
+
         <div class="video-box">
-            <button class="close-button" id="closeTutorial">✕</button>
+
+            <button class="close-button" id="closeTutorial">
+                ✕
+            </button>
+
             <h2>📥 آموزش نصب بازی</h2>
 
             <video id="tutorialVideo" controls preload="metadata">
                 <source src="help.mp4" type="video/mp4">
             </video>
+
         </div>
+
     </div>
+
+    <!-- فوتر -->
 
     <footer>
         💜 © تمامی حقوق برای PIKSO GAMES محفوظ است.
     </footer>
 
     <script>
+
         document.addEventListener("DOMContentLoaded", function() {
 
             const menuButton = document.getElementById("menuButton");
@@ -448,11 +578,19 @@
             const tutorialVideo = document.getElementById("tutorialVideo");
 
             const userPanelLink = document.getElementById("userPanelLink");
+            const sidebarPanelLink = document.getElementById("sidebarPanelLink");
+
+            const loginLink = document.getElementById("loginLink");
+            const registerLink = document.getElementById("registerLink");
+
+            // باز کردن منو
 
             function showMenu() {
                 sidebar.classList.add("active");
                 menuOverlay.classList.add("active");
             }
+
+            // بستن منو
 
             function hideMenu() {
                 sidebar.classList.remove("active");
@@ -467,67 +605,103 @@
                 link.addEventListener("click", hideMenu);
             });
 
+            // آموزش نصب
+
             openTutorial.addEventListener("click", function(event) {
+
                 event.preventDefault();
+
                 hideMenu();
+
                 videoModal.classList.add("active");
+
             });
 
             function closeVideo() {
+
                 videoModal.classList.remove("active");
+
                 tutorialVideo.pause();
+
                 tutorialVideo.currentTime = 0;
+
             }
 
             closeTutorial.addEventListener("click", closeVideo);
 
             videoModal.addEventListener("click", function(event) {
+
                 if (event.target === videoModal) {
                     closeVideo();
                 }
+
             });
 
             document.addEventListener("keydown", function(event) {
+
                 if (event.key === "Escape") {
+
                     hideMenu();
+
                     closeVideo();
+
                 }
+
             });
 
-            // بررسی ورود کاربر و نمایش دکمه پنل کاربری
+            // بررسی ورود کاربر
+
             async function checkUserSession() {
+
                 try {
+
                     const response = await fetch("/api/me", {
+
                         method: "GET",
-                        credentials: "include",
+
+                        credentials: "same-origin",
+
                         cache: "no-store"
+
                     });
 
                     if (!response.ok) {
+
                         userPanelLink.hidden = true;
+                        sidebarPanelLink.hidden = true;
+
+                        loginLink.hidden = false;
+                        registerLink.hidden = false;
+
                         return;
+
                     }
 
                     const data = await response.json();
 
-                    const isLoggedIn =
-                        data.loggedIn === true ||
-                        data.isLoggedIn === true ||
-                        data.authenticated === true ||
-                        Boolean(data.username) ||
-                        Boolean(data.user);
+                    const isLoggedIn = Boolean(data.username);
 
                     userPanelLink.hidden = !isLoggedIn;
+                    sidebarPanelLink.hidden = !isLoggedIn;
+
+                    loginLink.hidden = isLoggedIn;
+                    registerLink.hidden = isLoggedIn;
 
                 } catch (error) {
+
                     console.error("خطا در بررسی وضعیت ورود:", error);
+
                     userPanelLink.hidden = true;
+                    sidebarPanelLink.hidden = true;
+
                 }
+
             }
 
             checkUserSession();
 
         });
+
     </script>
 
 </body>
