@@ -1,10 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>کتابخانه من | PIKSO GAMES</title>
+
+<title>پنل کاربری | PIKSO GAMES</title>
+
 <link rel="icon" href="pikso-logo-header.jpg" type="image/jpeg">
 
 <style>
@@ -78,6 +80,10 @@ header {
     cursor: pointer;
 }
 
+.logout:hover {
+    background: #9333ea;
+}
+
 .container {
     width: 90%;
     margin: 45px auto;
@@ -90,7 +96,87 @@ h1 {
 
 .welcome {
     color: #aaa;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
+}
+
+/* پنل کاربری */
+
+.profile-card {
+    background: linear-gradient(135deg, #171326, #11111b);
+    border: 1px solid #7026b9;
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 45px;
+    max-width: 650px;
+    box-shadow: 0 0 25px #7026b922;
+}
+
+.profile-title {
+    color: #c084fc;
+    font-size: 23px;
+    margin-bottom: 25px;
+}
+
+.profile-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.input-label {
+    display: block;
+    margin-bottom: 10px;
+    color: #ddd;
+}
+
+.username-input {
+    width: 100%;
+    padding: 14px;
+    background: #09090f;
+    border: 1px solid #493267;
+    border-radius: 9px;
+    color: white;
+    outline: none;
+    font-size: 16px;
+    margin-bottom: 18px;
+}
+
+.username-input:focus {
+    border-color: #c084fc;
+    box-shadow: 0 0 10px #9333ea55;
+}
+
+.save-button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg, #7026b9, #9333ea);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: Tahoma;
+}
+
+.save-button:hover {
+    background: #a855f7;
+}
+
+.save-button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.profile-message {
+    margin-top: 18px;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* کتابخانه */
+
+.games-title {
+    color: #c084fc;
+    margin-bottom: 22px;
 }
 
 .games {
@@ -150,6 +236,7 @@ h1 {
 }
 
 @media(max-width: 700px) {
+
     body {
         padding-left: 145px;
     }
@@ -166,6 +253,10 @@ h1 {
     .logo-image {
         width: 95px;
     }
+
+    .profile-card {
+        padding: 18px;
+    }
 }
 </style>
 </head>
@@ -173,6 +264,7 @@ h1 {
 <body>
 
 <aside class="sidebar">
+
     <img
         src="pikso-logo-header.jpg"
         class="sidebar-logo"
@@ -180,54 +272,126 @@ h1 {
     >
 
     <a href="index.html">🏠 خانه</a>
-    <a href="dashboard.html">🎮 کتابخانه من</a>
-    <a href="login.html">👤 حساب کاربری</a>
+    <a href="dashboard.html">👤 پنل کاربری</a>
+    <a href="#library">🎮 کتابخانه من</a>
+
 </aside>
 
 <header>
+
     <img
         src="pikso-logo-header.jpg"
         class="logo-image"
         alt="PIKSO GAMES"
     >
 
-    <button class="logout" onclick="logout()">خروج از حساب</button>
+    <button class="logout" onclick="logout()">
+        خروج از حساب
+    </button>
+
 </header>
 
 <main class="container">
-    <h1>کتابخانه بازی‌های من</h1>
+
+    <h1>پنل کاربری</h1>
 
     <p class="welcome" id="welcome">
         در حال بررسی حساب کاربری...
     </p>
 
-    <div class="games">
-        <div class="game-card">
-            <img src="IMG_20261106_004502_679.jpg" alt="WOLF RACING">
+    <!-- بخش تغییر نام کاربری -->
 
-            <div class="game-info">
-                <h2>WOLF RACING</h2>
+    <section class="profile-card">
 
-                <div class="free">رایگان</div>
+        <div class="profile-icon">👤</div>
 
-                <a class="download"
-                   href="https://www.picofile.com/f/tN9NxENv5s/pixo-games.zip"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    دانلود دوباره بازی
-                </a>
+        <h2 class="profile-title">
+            اطلاعات حساب کاربری
+        </h2>
+
+        <label class="input-label">
+            نام کاربری جدید:
+        </label>
+
+        <input
+            type="text"
+            id="newUsername"
+            class="username-input"
+            placeholder="نام کاربری جدید را وارد کن"
+            minlength="3"
+            maxlength="20"
+            autocomplete="username"
+        >
+
+        <button
+            class="save-button"
+            id="saveButton"
+            onclick="changeUsername()"
+        >
+            💾 ذخیره تغییرات
+        </button>
+
+        <p class="profile-message" id="profileMessage"></p>
+
+    </section>
+
+    <!-- کتابخانه بازی‌ها -->
+
+    <section id="library">
+
+        <h1 class="games-title">
+            🎮 کتابخانه بازی‌های من
+        </h1>
+
+        <div class="games">
+
+            <div class="game-card">
+
+                <img
+                    src="IMG_20261106_004502_679.jpg"
+                    alt="WOLF RACING"
+                >
+
+                <div class="game-info">
+
+                    <h2>WOLF RACING</h2>
+
+                    <div class="free">
+                        رایگان
+                    </div>
+
+                    <a
+                        class="download"
+                        href="https://www.picofile.com/f/tN9NxENv5s/pixo-games.zip"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        دانلود دوباره بازی
+                    </a>
+
+                </div>
+
             </div>
+
         </div>
-    </div>
+
+    </section>
 
     <p class="message" id="message"></p>
+
 </main>
 
 <script>
+
+// بررسی وضعیت ورود
+
 async function checkLogin() {
+
     try {
+
         const response = await fetch("/api/me", {
-            credentials: "same-origin"
+            credentials: "same-origin",
+            cache: "no-store"
         });
 
         if (!response.ok) {
@@ -240,32 +404,140 @@ async function checkLogin() {
         document.getElementById("welcome").textContent =
             "خوش آمدی " + user.username + " عزیز!";
 
+        document.getElementById("newUsername").value =
+            user.username;
+
     } catch (error) {
+
         document.getElementById("welcome").textContent =
             "ارتباط با سرور برقرار نشد.";
+
     }
+
 }
 
-async function logout() {
+
+// تغییر نام کاربری
+
+async function changeUsername() {
+
+    const input = document.getElementById("newUsername");
+    const button = document.getElementById("saveButton");
+    const message = document.getElementById("profileMessage");
+
+    const newUsername = input.value.trim();
+
+    message.textContent = "";
+
+    if (newUsername.length < 3 || newUsername.length > 20) {
+
+        message.style.color = "#fca5a5";
+
+        message.textContent =
+            "نام کاربری باید بین ۳ تا ۲۰ کاراکتر باشد.";
+
+        return;
+
+    }
+
+    button.disabled = true;
+    button.textContent = "در حال ذخیره...";
+
     try {
+
+        const response = await fetch("/api/change-username", {
+
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            credentials: "same-origin",
+
+            body: JSON.stringify({
+                newUsername: newUsername
+            })
+
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+            message.style.color = "#65e6a0";
+
+            message.textContent =
+                "✅ " + data.message;
+
+            document.getElementById("welcome").textContent =
+                "خوش آمدی " + data.username + " عزیز!";
+
+            input.value = data.username;
+
+        } else {
+
+            message.style.color = "#fca5a5";
+
+            message.textContent =
+                "❌ " + data.message;
+
+        }
+
+    } catch (error) {
+
+        message.style.color = "#fca5a5";
+
+        message.textContent =
+            "ارتباط با سرور برقرار نشد.";
+
+    }
+
+    button.disabled = false;
+    button.textContent = "💾 ذخیره تغییرات";
+
+}
+
+
+// خروج از حساب
+
+async function logout() {
+
+    try {
+
         const response = await fetch("/api/logout", {
+
             method: "POST",
+
             credentials: "same-origin"
+
         });
 
         if (response.ok) {
+
             window.location.href = "login.html";
+
         } else {
+
             document.getElementById("message").textContent =
                 "خروج از حساب انجام نشد.";
+
         }
+
     } catch (error) {
+
         document.getElementById("message").textContent =
             "ارتباط با سرور برقرار نشد.";
+
     }
+
 }
 
+
+// اجرا
+
 checkLogin();
+
 </script>
 
 </body>
