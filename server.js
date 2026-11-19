@@ -1,26 +1,93 @@
-
 const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcryptjs");
+const { Pool } = require("pg");
+const PgSession = require("connect-pg-simple")(session);
 const fs = require("fs");
 const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const USERS_FILE = path.join(__dirname, "users.json");
-
 app.set("trust proxy", 1);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// نشست کاربر: اعتبار کوکی ۳۰ روز
+// اتصال به PostgreSQL
+if (!process.env.DATABASE_URL) {
+    console.error("DATABASE_URL is missing!");
+    process.exit(1);
+}
+
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
+
+// ایجاد جدول کاربران
+async function initializeDatabase() {
+    await pool.query(`
+        CREATE TABLE IF NOT EXISTS users (
+            id SERIAL PRIMARY KEY,
+            username TEXT NOT NULL,
+            username_lower TEXT UNIQUE NOT NULL,
+            password_hash TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
+
+    // انتقال کاربران قدیمی، در صورت وجود فایل users.json
+    const usersFile = path.join(__dirname, "users.json");
+
+    if (fs.existsSync(usersFile)) {
+        try {
+            const oldUsers = JSON.parse(
+                fs.readFileSync(usersFile, "utf8")
+            );
+
+            if (Array.isArray(oldUsers)) {
+                for (const user of oldUsers) {
+                    if (!user.username || !user.password) continue;
+
+                    await pool.query(
+                        `INSERT INTO users
+                        (username, username_lower, password_hash)
+                        VALUES ($1, $2, $3)
+                        ON CONFLICT (username_lower) DO NOTHING`,
+                        [
+                            user.username,
+                            user.username.toLowerCase(),
+                            user.password
+                        ]
+                    );
+                }
+
+                console.log("Old users migration checked.");
+            }
+        } catch (error) {
+            console.error("Old users migration error:", error);
+        }
+    }
+
+    console.log("PostgreSQL database is ready.");
+}
+
+// نشست کاربران با ذخیره دائمی در دیتابیس
 app.use(session({
+    store: new PgSession({
+        pool: pool,
+        tableName: "user_sessions",
+        createTableIfMissing: true
+    }),
+
     secret: process.env.SESSION_SECRET || "pikso-development-secret",
     resave: false,
     saveUninitialized: false,
     rolling: true,
+
     cookie: {
         httpOnly: true,
         sameSite: "lax",
@@ -47,32 +114,6 @@ app.use((req, res, next) => {
 
 // فایل‌های سایت
 app.use(express.static(__dirname));
-
-// خواندن کاربران
-function getUsers() {
-    try {
-        if (!fs.existsSync(USERS_FILE)) {
-            fs.writeFileSync(USERS_FILE, "[]", "utf8");
-        }
-
-        const data = fs.readFileSync(USERS_FILE, "utf8");
-        const users = JSON.parse(data);
-
-        return Array.isArray(users) ? users : [];
-    } catch (error) {
-        console.error("Users error:", error);
-        return [];
-    }
-}
-
-// ذخیره کاربران
-function saveUsers(users) {
-    fs.writeFileSync(
-        USERS_FILE,
-        JSON.stringify(users, null, 2),
-        "utf8"
-    );
-}
 
 // تست سرور
 app.get("/api", (req, res) => {
@@ -109,32 +150,30 @@ app.post("/api/register", async (req, res) => {
             });
         }
 
-        const users = getUsers();
-
-        const exists = users.some(user =>
-            user.username.toLowerCase() === cleanUsername.toLowerCase()
-        );
-
-        if (exists) {
-            return res.status(409).json({
-                message: "این نام کاربری قبلاً ثبت شده است."
-            });
-        }
-
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        users.push({
-            username: cleanUsername,
-            password: hashedPassword
-        });
-
-        saveUsers(users);
+        await pool.query(
+            `INSERT INTO users
+            (username, username_lower, password_hash)
+            VALUES ($1, $2, $3)`,
+            [
+                cleanUsername,
+                cleanUsername.toLowerCase(),
+                hashedPassword
+            ]
+        );
 
         return res.status(201).json({
             message: "ثبت‌نام موفق بود! حالا وارد شو."
         });
 
     } catch (error) {
+        if (error.code === "23505") {
+            return res.status(409).json({
+                message: "این نام کاربری قبلاً ثبت شده است."
+            });
+        }
+
         console.error("Register error:", error);
 
         return res.status(500).json({
@@ -157,13 +196,16 @@ app.post("/api/login", async (req, res) => {
             });
         }
 
-        const users = getUsers();
-
-        const user = users.find(item =>
-            item.username.toLowerCase() === username.trim().toLowerCase()
+        const result = await pool.query(
+            `SELECT username, password_hash
+             FROM users
+             WHERE username_lower = $1`,
+            [username.trim().toLowerCase()]
         );
 
-        if (!user || !(await bcrypt.compare(password, user.password))) {
+        const user = result.rows[0];
+
+        if (!user || !(await bcrypt.compare(password, user.password_hash))) {
             return res.status(401).json({
                 message: "نام کاربری یا رمز عبور اشتباه است."
             });
@@ -246,10 +288,23 @@ app.use((error, req, res, next) => {
     });
 });
 
-// اجرای سرور
-app.listen(PORT, "0.0.0.0", () => {
-    console.log("================================");
-    console.log("PIKSO GAMES SERVER IS RUNNING");
-    console.log("PORT: " + PORT);
-    console.log("================================");
-});
+// راه‌اندازی سرور پس از آماده شدن دیتابیس
+async function startServer() {
+    try {
+        await initializeDatabase();
+
+        app.listen(PORT, "0.0.0.0", () => {
+            console.log("================================");
+            console.log("PIKSO GAMES SERVER IS RUNNING");
+            console.log("DATABASE: CONNECTED");
+            console.log("PORT: " + PORT);
+            console.log("================================");
+        });
+
+    } catch (error) {
+        console.error("Server startup error:", error);
+        process.exit(1);
+    }
+}
+
+startServer();
